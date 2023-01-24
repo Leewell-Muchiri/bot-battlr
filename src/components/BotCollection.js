@@ -1,29 +1,14 @@
 import React from "react";
-import BotCard from "./BotCard";
-import BotSpecs from "./BotSpecs";
+import Card from "./Card";
 
-function BotCollection({ deleteBot, isLoading, allBots, enlistedBots, setEnlistedBots, currentBot, setCurrentBot }) {
-  const addBotToList = (botId, bot) => {
-    const foundEnlistedBot = enlistedBots.find((bot) => bot.id === botId);
-    if (foundEnlistedBot) {
-      return;
-    }
-    setEnlistedBots(prevBots => [...prevBots, bot])
-  };
-
-  const viewBotHandler = (bot) => {
-    setCurrentBot(bot);
-  }
-  const goBackHandler = () => {
-    setCurrentBot(null);
-  }
-
+function BotCollection({ bots, getMyArmy }) {
+  const botCollection = bots.map(bot => {
+    return <Card getMyArmy={getMyArmy} key={bot.id} bot={bot} />
+  })
   return (
     <div className="ui four column grid">
       <div className="row">
-        {isLoading && <p>Loading...</p>}
-        {!isLoading && !currentBot && allBots.map((bot, index) => <BotCard deleteBot={deleteBot} key={index} viewBotHandler={viewBotHandler} bot={bot}></BotCard>)}
-        {!isLoading && currentBot && <BotSpecs goBackHandler={goBackHandler} addBotToList={addBotToList} bot={currentBot}></BotSpecs>}
+        {botCollection}
       </div>
     </div>
   );

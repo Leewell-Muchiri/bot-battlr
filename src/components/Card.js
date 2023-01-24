@@ -1,5 +1,4 @@
 import React from "react";
-
 const botTypeClasses = {
   Assault: "icon military",
   Defender: "icon shield",
@@ -8,14 +7,13 @@ const botTypeClasses = {
   Witch: "icon magic",
   Captain: "icon star",
 };
-
-function BotCard({ deleteBot, bot, viewBotHandler }) {
+function Card({ bot, getMyArmy, handleFilter }) {
   return (
     <div className="ui column">
       <div
         className="ui card"
         key={bot.id}
-        onClick={() => viewBotHandler(bot)}
+        onClick={() => getMyArmy(bot)}
       >
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} />
@@ -34,7 +32,6 @@ function BotCard({ deleteBot, bot, viewBotHandler }) {
             <i className="icon heartbeat" />
             {bot.health}
           </span>
-
           <span>
             <i className="icon lightning" />
             {bot.damage}
@@ -45,12 +42,16 @@ function BotCard({ deleteBot, bot, viewBotHandler }) {
           </span>
           <span>
             <div className="ui center aligned segment basic">
-              <button
+              {handleFilter? <button
                 className="ui mini red button"
-                onClick={() => deleteBot(bot.id)}
+                onClick={() =>
+                  handleFilter(bot)
+                }
               >
-                x
-              </button>
+                REMOVE
+              </button> :
+              true
+            }
             </div>
           </span>
         </div>
@@ -58,5 +59,4 @@ function BotCard({ deleteBot, bot, viewBotHandler }) {
     </div>
   );
 }
-
-export default BotCard;
+export default Card;
